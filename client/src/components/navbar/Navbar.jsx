@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from "react-router-dom";
 import  './Navbar.scss'
 export const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [username, setUsername] = useState('');
+
+    useEffect(() => {
+        // Retrieve username from local storage
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.username) {
+            setUsername(user.username);
+        }
+    }, []);
+
   const toggleMenu = () => {
     setShowMenu(prevShowMenu => !prevShowMenu);
 };
@@ -39,6 +49,7 @@ export const Navbar = () => {
             <div className='profile'>
               <Link to='/login' className='link'>
                 <i class="fa-solid fa-user"></i>
+                {username && <span>{username}</span>}
               </Link>
             </div>
         </div>
