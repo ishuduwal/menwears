@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './User.scss';
 import { Link } from "react-router-dom";
 import login from '../../assets/login.png';
+import { Login } from '../api/User.js';
 export const Signin = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      const user = { email, password };
+      const data = await Login(user);
+      console.log('Login successful:', data);
+      localStorage.setItem('user', JSON.stringify(user));
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
   return (
     <>
     <div className='login'>
@@ -14,14 +29,14 @@ export const Signin = () => {
         <p>Please login iwth your personal information by email address and password.</p>
         <div className='inputbox'>
             <label>Email</label>
-            <input type='email'/>
+            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className='inputbox'>
             <label>Password</label>
-            <input type='password'/>
+            <input type='password'  value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <div className='button-login'>
-            <button>Login</button>
+            <button onClick={handleLogin}>Login</button>
         </div>
         <div className='or'>
             <p>or</p>
