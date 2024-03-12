@@ -33,7 +33,7 @@ export const Navbar = () => {
           )}
           <ul className={`menu ${showMenu ? 'show':''}`}>
             <li onClick={closeMenu}>Home</li>
-            <li onClick={closeMenu}>Product</li>
+            <li onClick={closeMenu}><Link to='/product'  className='nav-links'>Product</Link></li>
             <li onClick={closeMenu}>About</li>
           </ul>
           {showMenu && (

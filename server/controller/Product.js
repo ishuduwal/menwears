@@ -14,13 +14,13 @@ export const AddProduct = async (req, res) => {
     const { title, description, price } = req.body
     try {
         let product = await Product.findOne({ title: title })
-        if (laptop) { res.status(200).json({ message: "Product is already added" }) }
+        if (product) { res.status(200).json({ message: "Product is already added" }) }
         else {
             const newProduct = new Product({
                 title, description, price
             })
             await newProduct.save()
-            res.satus(201).json({message:"New product added"})
+            res.status(201).json({message:"New product added"})
         }
     } catch (error) {
         res.status(401).json({message: error.message})
@@ -51,14 +51,15 @@ export const EditProduct = async (req, res) => {
 
 export const DeleteProduct = async (req, res) => {
     try {
-        const { id } = req.params;
+        const  {id}  = req.params;
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ message: 'Product Id is missing' });
         }
-        const product = await Product.findOneAndDelete({ _id: id })
-        if (!product) {
-            return res.status(404).json({message:'Product not found'})
-        }
+
+        if (!await Product.find({ _id: id })) return res.status(404).json("Product not found!");
+        
+        await Product.findOneAndDelete({ _id: id })
+        
         res.status(200).json({message:'Product deleted sucessfully'})
     } catch (error) {
         console.error('Error deleting product:', error);
