@@ -5,6 +5,7 @@ import { Signin } from './components/user/Signin';
 import { Signup } from './components/user/Signup';
 import { Product } from './components/product/Product';
 import { Productdetail } from './components/product/Productdetail';
+import { Dashboard } from './components/admin/Dashboard';
 
 function App() {
 
@@ -18,7 +19,8 @@ function App() {
               <Route path='/login' element={<Signin />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/product' element={<Product />} />
-              <Route path='/product-detail' element={<Productdetail />}/>
+              <Route path='/product-detail' element={<Productdetail />} />
+              <Route path='/admin-dashboard' element={<Dashboard/>}/>
             </Routes>
           </div>
         </Router>
