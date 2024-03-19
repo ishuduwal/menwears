@@ -24,7 +24,7 @@ export const Navbar = () => {
   return (
     <>
     <div className='navbar'>
-        <span>Menswear</span>
+        <span><Link to='/' className='home-link'>Menswear</Link></span>
         <div className='right-container'>
           {!showMenu && (
           <div className='menu-toggle' onClick={toggleMenu}>

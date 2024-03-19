@@ -6,6 +6,7 @@ import { Signup } from './components/user/Signup';
 import { Product } from './components/product/Product';
 import { Productdetail } from './components/product/Productdetail';
 import { Dashboard } from './components/admin/Dashboard';
+import { Home } from './components/home/Home';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Navbar />
           <div className='body'>
             <Routes>
+              <Route path='/' element={<Home />} />
               <Route path='/login' element={<Signin />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/product' element={<Product />} />
