@@ -27,12 +27,29 @@ export const AddProduct = async (req, res) => {
     }
 }
 
+export const DeleteProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({message:'Product id is missing'})
+        }
+        const product = await Product.findOneAndDelete({ _id: id });
+        if (!product) {
+            return res.status(404).json({message:'product not found'})
+        }
+        res.status(200).json({message:'product deleted sucessfully'})
+    } catch (error) {
+        console.error('error deleting product', error);
+        res.status(500).json({message:'error deleting laptop', error:error.message})
+    }
+}
+
 export const EditProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const { title, description, price } = req.body;
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: 'Products id is missing' });
+            return res.status(400).json({message:'Product id is missing or invalid'})
         }
         const updatedProduct = await Product.findByIdAndUpdate(
             id,
@@ -40,29 +57,11 @@ export const EditProduct = async (req, res) => {
             { new: true }
         );
         if (!updatedProduct) {
-            return res.status(404).json({message:'Product not found'})
+            return res.status(404).json({ message: 'product not found'})
         }
-        res.status(200).json({ message: 'Product updated sucessfully', product: updatedProduct });
+        res.status(200).json({ message: 'product updated sucessfully', laptop: updatedProduct });
     } catch (error) {
-        console.log('Error while updating product:', error);
-        res.status(500).json({message:'Error updating product', error: error.message})
-    }
-}
-
-export const DeleteProduct = async (req, res) => {
-    try {
-        const  {id}  = req.params;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: 'Product Id is missing' });
-        }
-
-        if (!await Product.find({ _id: id })) return res.status(404).json("Product not found!");
-        
-        await Product.findOneAndDelete({ _id: id })
-        
-        res.status(200).json({message:'Product deleted sucessfully'})
-    } catch (error) {
-        console.error('Error deleting product:', error);
-        res.status(500).json({message:'Error deleting product', error: error.message})
+        console.error('error updating product:', error)
+        res.status(500).json({message:'error updating product', error: error.message})
     }
 }
