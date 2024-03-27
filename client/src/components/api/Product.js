@@ -3,5 +3,5 @@ const URL = "http://localhost:5000/product";
 
 export const GetProduct = () => axios.get(URL);
 export const AddProduct = (product) => axios.post(`${URL}/`, product);
-export const EditProduct = (product) => axios.post(`${URL}/${product._id}`, product);
+export const EditProduct = (product) => axios.put(`${URL}/${product._id}`, product);
 export const DeleteProduct = (id) => axios.delete(`${URL}/${id}`);
