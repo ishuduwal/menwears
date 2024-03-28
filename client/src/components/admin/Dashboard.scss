@@ -36,7 +36,7 @@
                 background-color: #eaffed;
             }
             div:nth-child(3){
-                background-color: #fbebeb
+                background-color: #fbebeb;
             }
             div{
                 height: 7rem;
@@ -111,6 +111,11 @@
                         align-items: center;
                     }
                 }
+            }
+            .user-edit{
+                left: 50%;
+                right: 50%;
+                position: absolute;
             }
     }
 }

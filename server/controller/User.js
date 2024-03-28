@@ -1,5 +1,14 @@
 import User from '../model/User.js'
 
+export const GetUser = async (req, res) => {
+    try {
+        const user = await User.find()
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(401).json({message: error.message})
+    }
+}
+
 export const Signup = async (req, res) => {
     const { username, email, mobilenumber, password } = req.body
     try {

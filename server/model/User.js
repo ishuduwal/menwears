@@ -15,6 +15,9 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type:String
+    },
+    isAdmin: {
+        type: Boolean
     }
 })
 const User = new mongoose.model("User", userSchema)

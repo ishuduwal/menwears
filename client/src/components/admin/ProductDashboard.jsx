@@ -134,8 +134,6 @@ export const ProductDashboard = ({ selectedSection }) => {
                     </tbody>
                 </table>
             </div>
-            
-            {/* Render edit form outside of the dashboard-table div */}
             {isEditing && (
                 <div className='add-product edit-product'>
                     <button onClick={handleCloseEdit} className='close-mark'><i className="fa-solid fa-xmark"></i></button>
