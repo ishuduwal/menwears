@@ -44,7 +44,7 @@ export const UserDashboard = () => {
                 <td>{user.email}</td>
                 <td>{user.mobileNumber}</td>
                 <td>{user.isAdmin ? 'Yes' : 'No'}</td>
-                <td>
+                <td className='action-button'>
                   <button onClick={handleEdit}>Edit</button>
                   <button>Delete</button>
                 </td>

@@ -2,18 +2,19 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from "react-router-dom";
 import  './Navbar.scss'
+import { Sidebar } from './Sidebar';
 export const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [username, setUsername] = useState('');
+  const [isSidebar, setIsSidebar] = useState(false);
 
-    useEffect(() => {
-        // Retrieve username from local storage
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user && user.username) {
-            setUsername(user.username);
-        }
-    }, []);
-
+  useEffect(() => {
+    // Retrieve username from local storage
+    const storedUser = JSON.parse(window.localStorage.getItem("user"));
+    if (storedUser && storedUser.username) {
+      setUsername(storedUser.username); // Set only the username
+    }
+  }, []);
   const toggleMenu = () => {
     setShowMenu(prevShowMenu => !prevShowMenu);
 };
@@ -47,10 +48,19 @@ export const Navbar = () => {
               <input type='text'></input>
             </div>
             <div className='profile'>
-              <Link to='/login' className='link'>
-                <i class="fa-solid fa-user"></i>
-                {username && <span>{username}</span>}
-              </Link>
+              {username ? (
+                <div>
+                  <div onClick={() => setIsSidebar(true)}>
+                    <i class="fa-solid fa-image-portrait"></i>
+                    {username && <span className='username-highlight'>{username}</span>}
+                  </div>
+                </div>
+              ) : (
+                <Link to='/login' className='link'>
+                  <i class="fa-solid fa-user"></i>
+                </Link>
+              )}
+              {isSidebar && <Sidebar isSidebar={isSidebar} setIsSidebar={setIsSidebar} />}
             </div>
         </div>
         </div>

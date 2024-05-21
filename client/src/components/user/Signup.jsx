@@ -16,11 +16,14 @@ export const Signup = () => {
             if (response) {
                 console.log("Account create sucessfully")
                 localStorage.setItem('user', JSON.stringify(user));
+                window.localStorage.setItem("isAdmin", response.isAdmin);
+                window.location.reload();
             }
         } catch (error) {
-            console.log(error)
+            console.log("account creation failed:",error)
         }
     }
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setUser({...user,[name]:value})

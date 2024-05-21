@@ -7,6 +7,7 @@ import { Product } from './components/product/Product';
 import { Productdetail } from './components/product/Productdetail';
 import { Dashboard } from './components/admin/Dashboard';
 import { Home } from './components/home/Home';
+import { Cart } from './components/navbar/Cart';
 
 function App() {
 
@@ -22,7 +23,8 @@ function App() {
               <Route path='/signup' element={<Signup />} />
               <Route path='/product' element={<Product />} />
               <Route path='/product-detail' element={<Productdetail />} />
-              <Route path='/admin-dashboard' element={<Dashboard/>}/>
+              <Route path='/admin-dashboard' element={<Dashboard />} />
+              <Route path='/cart' element={<Cart />}/>
             </Routes>
           </div>
         </Router>

@@ -53,7 +53,7 @@
         gap: 2rem;
         .profile{
             .link{
-                .fa-solid{
+                .fa-solid, .username-highlight{
                     color: #fff;
                 }
             }
@@ -88,6 +88,27 @@
             z-index: 1;
             justify-content: center;
             align-items: center;
+        }
+    }
+}
+.sidebar{
+    height: 100vh;
+    background-color: #6d38aa;
+    width: 10rem;
+    position:fixed;
+    right: 0;
+    top: 4rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3rem;
+    div{
+        button{
+            margin: 1rem;
+            width: 7rem;
+            height: 1.5rem;
+            font-size: 1rem;
         }
     }
 }

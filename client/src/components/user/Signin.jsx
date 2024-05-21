@@ -2,22 +2,31 @@ import React, { useState } from 'react'
 import './User.scss';
 import { Link } from "react-router-dom";
 import login from '../../assets/login.png';
-import { Login } from '../api/User.js';
+import { Login } from '../function/User';
 export const Signin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [user, setUser] = useState({
+    email: "",
+    password:""
+  })
 
-  const handleLogin = async () => {
+  const handleChange = e => {
+    const { name, value } = e.target
+    setUser({
+      ...user,
+      [name]:value
+  })
+  }
+  const LoginHandler = async (e) => {
+    e.preventDefault();
     try {
-      const user = { email, password };
-      const data = await Login(user);
-      console.log('Login successful:', data);
+      const res = await Login(user);
       localStorage.setItem('user', JSON.stringify(user));
+      window.localStorage.setItem("isAdmin", res.isAdmin);
+      window.location.reload();
     } catch (error) {
-      console.error('Login error:', error);
+      console.log("login failed");
     }
-  };
-
+  }
   return (
     <>
     <div className='login'>
@@ -29,14 +38,14 @@ export const Signin = () => {
         <p>Please login iwth your personal information by email address and password.</p>
         <div className='inputbox'>
             <label>Email</label>
-            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type='email' name='email' value={user.email} onChange={handleChange} />
         </div>
         <div className='inputbox'>
             <label>Password</label>
-            <input type='password'  value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input type='password' name='password' value={user.password} onChange={handleChange} required='required' />
         </div>
         <div className='button-login'>
-            <button onClick={handleLogin}>Login</button>
+            <button onClick={(e)=> LoginHandler(e)}>Login</button>
         </div>
         <div className='or'>
             <p>or</p>

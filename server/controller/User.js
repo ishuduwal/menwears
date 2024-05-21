@@ -19,7 +19,8 @@ export const Signup = async (req, res) => {
                 username,
                 email,
                 mobilenumber,
-                password
+                password,
+                isAdmin: false
             })
             await newUser.save()
             res.status(201).json({message:"Account created", user:newUser})
