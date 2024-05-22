@@ -1,38 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Product.scss';
 import test from '../../assets/watch/test.png';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import {GetProduct} from '../function/Product'
+import { GetProduct } from '../function/Product';
 
 export const Product = () => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetchProducts();
-  })
-  const fetchProducts = async () => {
-    try {
-      const productsData = await GetProduct();
-      setProducts(productsData);
-    } catch (error) {
-      console.log(error);
+    const FetchProduct = async () => {
+      try {
+        let res = await GetProduct();
+        setProducts(res);
+      } catch (error) {
+        console.log('Failed to fetch products:', error);
+      }
     }
+    FetchProduct();
+  }, []);
+
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
   };
+
   return (
-    <>
     <div className='product'>
-        {products.map((product) => (
-          <Link  className='product-detail' key={product.id}>
-            <div className='product-item'>
-              <div>
-                <img src={test } />
-                <p>{product.title}</p>
-              </div>
+      {products.map((product) => (
+        <div key={product._id} className='product-item' onClick={() => handleProductClick(product._id)}>
+            <div>
+              <img src={test} alt={product.title} />
+              <p>{product.title}</p>
             </div>
-          </Link>
-        ))}
-      </div>
-    </>
+          </div>
+      ))}
+    </div>
   )
 }

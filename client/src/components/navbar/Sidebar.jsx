@@ -49,7 +49,7 @@ export const Sidebar = ({ isSidebar, setIsSidebar }) => {
                 </div>
             )}
             <div>
-                <button className='cart-product'>Cart</button>
+                <Link to='/cart'><button className='cart-product'>Cart</button></Link>
             </div>
             <div>
                 <button className='logout' onClick={LogoutHandler}>Logout</button>
