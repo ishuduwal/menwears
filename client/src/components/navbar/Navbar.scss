@@ -140,9 +140,17 @@
                 margin-bottom: 1rem;
             }
         }
+        .remove-button{
+            button{
+                height: 1.5rem;
+                width:7rem;
+                font-size: 1rem;
+            }
+        }
         .bottom-cart{
             display:flex;
             justify-content: space-between;
+            gap: 2rem;
             button{
                 height: 1.5rem;
                 width: 5rem;

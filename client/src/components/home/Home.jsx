@@ -21,7 +21,7 @@ export const Home = () => {
     <>
     <div className='home'>
       <div className='watch-container'>
-        <p>Style,elegance,and<br/> time—all yours.</p>
+        <p>Royals Bakery, <br></br> every bite is a delight!</p>
         <img src={images[currentImageIndex]} alt={`Image ${currentImageIndex + 1}`} />
       </div>
     </div>

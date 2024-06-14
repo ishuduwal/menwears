@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import  './Navbar.scss'
 import { Sidebar } from './Sidebar';
 export const Navbar = () => {
@@ -9,10 +9,10 @@ export const Navbar = () => {
   const [isSidebar, setIsSidebar] = useState(false);
 
   useEffect(() => {
-    // Retrieve username from local storage
+    // username from local storage
     const storedUser = JSON.parse(window.localStorage.getItem("user"));
-    if (storedUser && storedUser.username) {
-      setUsername(storedUser.username); // Set only the username
+    if (storedUser && storedUser.email) {
+      setUsername(storedUser.email); 
     }
   }, []);
   const toggleMenu = () => {
@@ -25,7 +25,7 @@ export const Navbar = () => {
   return (
     <>
     <div className='navbar'>
-        <span><Link to='/' className='home-link'>Menswear</Link></span>
+        <span><Link to='/' className='home-link'>Royal's Bakery</Link></span>
         <div className='right-container'>
           {!showMenu && (
           <div className='menu-toggle' onClick={toggleMenu}>

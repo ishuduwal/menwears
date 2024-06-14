@@ -18,6 +18,15 @@ export const AddProduct = async (product) => {
     }
 }
 
+
+export const UploadProduct = async (product) => {
+    try {
+        const { data } = await api.UploadProduct(product);
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 export const EditProduct = async (updatedData) => {
     try {
         const { data } = await api.EditProduct(updatedData)

@@ -11,13 +11,13 @@ export const GetProduct = async (req, res) => {
 }
 
 export const AddProduct = async (req, res) => {
-    const { title, description, price } = req.body
+    const { title, description, price, image } = req.body
     try {
         let product = await Product.findOne({ title: title })
         if (product) { res.status(200).json({ message: "Product is already added" }) }
         else {
             const newProduct = new Product({
-                title, description, price
+                title, description, price, image
             })
             await newProduct.save()
             res.status(201).json({message:"New product added"})
@@ -47,13 +47,13 @@ export const DeleteProduct = async (req, res) => {
 export const EditProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description, price } = req.body;
+        const { title, description, price, image } = req.body;
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({message:'Product id is missing or invalid'})
         }
         const updatedProduct = await Product.findByIdAndUpdate(
             id,
-            { title, description, price },
+            { title, description, price, image },
             { new: true }
         );
         if (!updatedProduct) {

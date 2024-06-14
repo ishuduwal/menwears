@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Dashboard.scss'
-import { GetProduct, AddProduct, DeleteProduct, EditProduct } from '../function/Product';
+import { GetProduct, AddProduct, DeleteProduct, EditProduct, UploadProduct } from '../function/Product';
 
 export const ProductDashboard = ({ selectedSection }) => {
     const [showAddProduct, setShowAddProduct] = useState(false);
@@ -8,6 +8,7 @@ export const ProductDashboard = ({ selectedSection }) => {
     const [newProduct, setNewProduct] = useState({ title: '', description: '', price: '' });
     const [isEditing, setIsEditing] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
+    const [file, setFile] = useState(null);
 
     useEffect(() => {
         fetchProducts();
@@ -16,15 +17,30 @@ export const ProductDashboard = ({ selectedSection }) => {
     const fetchProducts = async () => {
         try {
             const productsData = await GetProduct();
-            setProducts(productsData);
+            if (Array.isArray(productsData)) {
+                setProducts(productsData);
+            } else {
+                console.log('Unexpected data format:', productsData);
+            }
         } catch (error) {
             console.log(error);
         }
     };
 
+    const ImageHandler = (e) => {
+        const file = e.target.files[0];
+        setFile(file);
+        setNewProduct(prev => ({ ...prev, image: file.name }));
+    }
+    
     const handleAddProduct = async () => {
         try {
             await AddProduct(newProduct);
+            if (file) {
+                const formData = new FormData();
+                formData.append('product', file);
+                await UploadProduct(formData); 
+            }
             setShowAddProduct(false);
             fetchProducts();
             setNewProduct({ title: '', description: '', price: '' });
@@ -32,6 +48,7 @@ export const ProductDashboard = ({ selectedSection }) => {
             console.log(error);
         }
     };
+
 
     const handleDeleteProduct = async (productId) => {
         try {
@@ -101,7 +118,7 @@ export const ProductDashboard = ({ selectedSection }) => {
                             <input type='text' value={newProduct.price} onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })} />
                         </div>
                         <div>
-                            <input type='file' />
+                            <input type='file' onChange={(e)=>ImageHandler(e)} />
                         </div>
                         <div>
                             <button onClick={handleAddProduct}>Add Product</button>
@@ -119,18 +136,24 @@ export const ProductDashboard = ({ selectedSection }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map((product, index) => (
-                            <tr key={product._id}>
-                                <td>{index + 1}</td>
-                                <td>{product.title}</td>
-                                <td>{product.description}</td>
-                                <td>{product.price}</td>
-                                <td className='action-button'>
-                                    <button onClick={() => handleEditProduct(product)}>Edit</button>
-                                    <button onClick={() => handleDeleteProduct(product._id)}>Delete</button>
-                                </td>
+                    {Array.isArray(products) && products.length > 0 ? (
+                            products.map((product, index) => (
+                                <tr key={product._id}>
+                                    <td>{index + 1}</td>
+                                    <td>{product.title}</td>
+                                    <td>{product.description}</td>
+                                    <td>{product.price}</td>
+                                    <td className='action-button'>
+                                        <button onClick={() => handleEditProduct(product)}>Edit</button>
+                                        <button onClick={() => handleDeleteProduct(product._id)}>Delete</button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5">No products found</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Product.scss';
-import test from '../../assets/watch/test.png';
 import { GetProduct } from '../function/Product';
 
 export const Product = () => {
@@ -29,7 +28,7 @@ export const Product = () => {
       {products.map((product) => (
         <div key={product._id} className='product-item' onClick={() => handleProductClick(product._id)}>
             <div>
-              <img src={test} alt={product.title} />
+            <img src={`../../assets/images/uploadedImage/${product.image}`} alt={product.title} />
               <p>{product.title}</p>
             </div>
           </div>

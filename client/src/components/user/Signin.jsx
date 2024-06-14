@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './User.scss';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login from '../../assets/login.png';
 import { Login } from '../function/User';
 export const Signin = () => {
+  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     password:""
@@ -19,14 +21,24 @@ export const Signin = () => {
   const LoginHandler = async (e) => {
     e.preventDefault();
     try {
+      // Send user data to the backend for authentication
       const res = await Login(user);
-      localStorage.setItem('user', JSON.stringify(user));
-      window.localStorage.setItem("isAdmin", res.isAdmin);
-      window.location.reload();
+      
+      // If authentication successful, update local storage with user information
+      if (res) {
+        localStorage.setItem('user', JSON.stringify(user));
+        window.localStorage.setItem("isAdmin", res.isAdmin);
+        setUsername(user.email);
+        navigate('/')
+        window.location.reload();
+      } else {
+        // Handle case where login credentials are invalid
+        console.log("Invalid email or password");
+      }
     } catch (error) {
-      console.log("login failed");
+      console.log("Login failed:", error);
     }
-  }
+  };
   return (
     <>
     <div className='login'>

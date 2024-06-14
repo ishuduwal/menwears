@@ -1,14 +1,14 @@
 import React,{useState} from 'react'
 import './User.scss';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Register } from '../function/User';
 export const Signup = () => {
     const [user, setUser] = useState({
         username: '',
         email: '',
-        mobilenumber: '',
         password: ''
     });
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -17,6 +17,7 @@ export const Signup = () => {
                 console.log("Account create sucessfully")
                 localStorage.setItem('user', JSON.stringify(user));
                 window.localStorage.setItem("isAdmin", response.isAdmin);
+                navigate('/'); 
                 window.location.reload();
             }
         } catch (error) {

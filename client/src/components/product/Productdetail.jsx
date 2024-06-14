@@ -6,6 +6,7 @@ import {GetProduct} from '../function/Product'
 export const Productdetail = () => {
   const { productId } = useParams();
   const [productDetail, setProductDetail] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -19,6 +20,17 @@ export const Productdetail = () => {
     };
     fetchProductDetail();
   }, [productId]);
+
+  const handleQuantityChange = (change) => {
+    setQuantity(prevQuantity => Math.max(prevQuantity + change, 1));
+  };
+
+  const handleAddToCart = () => {
+    const cartItem = { ...productDetail, quantity };
+    const existingCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    localStorage.setItem('cart', JSON.stringify([...existingCartItems, cartItem]));
+  };
+
   if (!productDetail) {
     return <div>Loading...</div>;
   }
@@ -33,15 +45,15 @@ export const Productdetail = () => {
           <p className='product-description'>{productDetail.description}</p>
           <p className='product-price'>{productDetail.price}</p>
           <div className='quantity-cart'>
-            <div className='quantity'>
-              <button>-</button>
-              <p>1</p>
-              <button>+</button>
-            </div>
-            <div className='btn-add-to-cart'>
-              <button>Add to cart</button>
-            </div>
+          <div className='quantity'>
+            <button onClick={() => handleQuantityChange(-1)}>-</button>
+            <p>{quantity}</p>
+            <button onClick={() => handleQuantityChange(1)}>+</button>
           </div>
+          <div className='btn-add-to-cart'>
+            <button onClick={handleAddToCart}>Add to cart</button>
+          </div>
+        </div>
         </div>
     </div>
     </>

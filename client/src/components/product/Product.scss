@@ -52,6 +52,9 @@
     .right-container{
         height: 25rem;
         max-width: 30rem;
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
         .product-title{
             font-size: 2rem;
             margin-bottom: 1rem;
